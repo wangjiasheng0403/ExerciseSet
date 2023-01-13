@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wjs.shoppingcart.Dao.CommodityDao">
+  <resultMap id="BaseResultMap" type="com.wjs.shoppingcart.Entity.Commodity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="couponPrice" jdbcType="DECIMAL" property="couponprice" />
+    <result column="deliveryPrice" jdbcType="DECIMAL" property="deliveryprice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, quantity, price, couponPrice, deliveryPrice
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from commodity
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from commodity
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.wjs.shoppingcart.Entity.Commodity" useGeneratedKeys="true">
+    insert into commodity (quantity, price, couponPrice, 
+      deliveryPrice)
+    values (#{quantity,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{couponprice,jdbcType=DECIMAL}, 
+      #{deliveryprice,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.wjs.shoppingcart.Entity.Commodity" useGeneratedKeys="true">
+    insert into commodity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="couponprice != null">
+        couponPrice,
+      </if>
+      <if test="deliveryprice != null">
+        deliveryPrice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="quantity != null">
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="couponprice != null">
+        #{couponprice,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryprice != null">
+        #{deliveryprice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wjs.shoppingcart.Entity.Commodity">
+    update commodity
+    <set>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="couponprice != null">
+        couponPrice = #{couponprice,jdbcType=DECIMAL},
+      </if>
+      <if test="deliveryprice != null">
+        deliveryPrice = #{deliveryprice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wjs.shoppingcart.Entity.Commodity">
+    update commodity
+    set quantity = #{quantity,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      couponPrice = #{couponprice,jdbcType=DECIMAL},
+      deliveryPrice = #{deliveryprice,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
